@@ -68,7 +68,7 @@ An initial attempt to achieve this transformation might be using the stream edit
 ```
 sed -e 's/\\begin{definition}\[\(.*\)\]/\\begin{note}\\xfield{Def: \1}\\begin{field}/g;s/end{definition}/end{field} \\end{note}/g' $1 > tmp_$1
 ```
-However, one might run into the problem that the future front side of the card, momentarily being contained within the square brackets, could stretch over multiple lines. Being a unix tool, sed does one thing very well: Editing a stream line-wise. Making sed do something else is going to be hard and prone to be buggy. So instead of trying to make sed something it is not meant to do, we choose a different tool and turn to a perl-based solution:
+However, one might run into the problem that the future front side of the card, momentarily being contained within the square brackets, could stretch over multiple lines. Being a unix tool, sed does one thing very well: Editing a stream line-wise. Making sed do something else is going to be hard and prone to be buggy. So instead of trying to make sed do something it is not meant to, we choose a different tool and turn to a perl-based solution:
 ```
 function latextoanki {
 perl -0777 -w -p -e 's/\\begin\{definition\}\[([^]]*)\]/\\begin{note}\n\\xfield{Def: $1}\n\\begin{field}/g;s/end\{definition\}/end\{field\} \n\\end{note}/g' main.tex > tmp_main.tex
@@ -128,7 +128,7 @@ diyplay_name=(
     )
 # Create backup, just in case
 cp $1 bckup_$1
-# UUUID
+# UUID
 for j in {1.."${#name[@]}"}
 do
 # Prepear adding of Universally Unique Identifiers where nonexistent
