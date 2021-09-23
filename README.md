@@ -138,7 +138,7 @@ perl -w -p -i -e "s/\\\\uuid\\{(?=})/\\\\uuid\\{$(date +%s).$./g" $1
 done
 # Create the import file
 cp $1 imp_$1
-# Apply transformation to import file
+# Transform the import file to make it compatible with LaTeX Note Importer for Anki
 for j in {1.."${#name[@]}"}
 do
 perl -0777 -w -i -p -e "s/\\\\begin\\{${name[$j]}\\}\\[([^]]*)\\]\\s*\\n\\s*\\\\uuid(\\{[^}]*\\})/\\\\begin{note}\\n\\\\xplain\$2\\n\\\\xfield{${diyplay_name[$j]}: \$1}\\n\\\\begin{field}/g;s/end\\{${name[$j]}\\}/end\\{field\\} \\n\\\\end{note}/g" imp_$1
